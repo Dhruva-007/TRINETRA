@@ -91,7 +91,7 @@ def main():
             / f"graph_{int(window):04d}.json"
         )
 
-        data = nx.node_link_data(graph)
+        data = nx.node_link_data(graph, edges="links")
 
         with open(
             output_file,

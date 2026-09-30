@@ -1,39 +1,59 @@
 #!/bin/bash
-
 set -e
 
 echo ""
 echo "=========================================="
-echo "       TRINETRA DATA PIPELINE"
+echo "       TRINETRA TELEMETRY PIPELINE"
 echo "=========================================="
 echo ""
 
-echo "[1/5] Extracting packets..."
+PCAP="data/raw/test.pcap"
+ZEEK_OUTPUT="data/zeek"
+
+if [ ! -f "$PCAP" ]; then
+    echo "[ERROR] PCAP not found: $PCAP"
+    exit 1
+fi
+
+mkdir -p "$ZEEK_OUTPUT"
+
+echo "[1/6] Running Zeek..."
+rm -f "$ZEEK_OUTPUT"/*.log
+(
+    cd "$ZEEK_OUTPUT"
+    /opt/zeek/bin/zeek -r "../../$PCAP"
+)
+
+echo "[2/6] Extracting packets with TShark..."
 ./scripts/extract_packets.sh
 
-echo ""
-echo "[2/5] Building flows..."
-python3 scripts/flow_extractor.py
+echo "[3/6] Building flows..."
+python scripts/flow_extractor.py
 
-echo ""
-echo "[3/5] Building network states..."
-python3 scripts/build_network_state.py
+echo "[4/6] Building network states..."
+python scripts/build_network_state.py
 
-echo ""
-echo "[4/5] Building temporal deltas..."
-python3 scripts/build_state_deltas.py
+echo "[5/6] Building temporal deltas..."
+python scripts/build_state_deltas.py
 
-echo ""
-echo "[5/5] Building dynamic graphs..."
-python3 scripts/build_graph.py
+echo "[6/6] Building dynamic graphs..."
+python scripts/build_graph.py
 
 echo ""
 echo "=========================================="
-echo "          PIPELINE COMPLETE"
+echo "       TELEMETRY PIPELINE COMPLETE"
 echo "=========================================="
 echo ""
 
-echo "Flow records:"
+echo "Zeek:"
+wc -l "$ZEEK_OUTPUT/conn.log"
+
+echo ""
+echo "Packets:"
+wc -l data/flows/packets.csv
+
+echo ""
+echo "Flows:"
 wc -l data/flows/flows.csv
 
 echo ""
@@ -41,10 +61,8 @@ echo "Network states:"
 wc -l data/windows/network_states_with_delta.csv
 
 echo ""
-echo "Dynamic graphs:"
-find data/graphs \
-    -name "*.json" \
-    | wc -l
+echo "Graphs:"
+find data/graphs -name "*.json" | wc -l
 
 echo ""
 echo "=========================================="
