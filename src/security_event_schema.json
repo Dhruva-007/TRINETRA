@@ -1,0 +1,15 @@
+{
+  "event_id": "TRN-XXXX",
+  "window": 0,
+  "timestamp": null,
+  "source": null,
+  "destination": null,
+  "event_type": "network_behavior_shift",
+  "current_anomaly": null,
+  "trajectory_change": null,
+  "future_risk": null,
+  "threat_index": null,
+  "evidence": [],
+  "technique": null,
+  "severity": null
+}

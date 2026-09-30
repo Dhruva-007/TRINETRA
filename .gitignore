@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Environment
+.env
+.env.*
+
+# Generated data
+data/raw/*.pcap
+data/raw/*.pcapng
+
+data/flows/*.csv
+data/windows/*.csv
+data/graphs/*.json
+data/events/*.json
+
+# Keep directory structure
+!data/raw/.gitkeep
+!data/flows/.gitkeep
+!data/windows/.gitkeep
+!data/graphs/.gitkeep
+!data/events/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

@@ -1,0 +1,28 @@
+project:
+  name: TRINETRA
+  description: Network Trajectory Intelligence & Early Warning
+
+telemetry:
+  window_seconds: 5
+  input_mode: pcap
+
+features:
+  anomaly:
+    enabled: true
+
+  temporal:
+    enabled: true
+
+  graph:
+    enabled: true
+
+ml:
+  anomaly_model: IsolationForest
+  temporal_model: GRU
+
+security:
+  threat_index: enabled
+  attack_framework: MITRE_ATT&CK
+
+dashboard:
+  framework: Streamlit
