@@ -1,20 +1,32 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
 .venv/
+venv/
+env/
 
 # Environment
 .env
 .env.*
 
-# Generated data
+# Generated telemetry data (runtime outputs — not committed)
 data/raw/*.pcap
 data/raw/*.pcapng
 
 data/flows/*.csv
 data/windows/*.csv
 data/graphs/*.json
+
+# Generated security events (runtime output — not committed)
 data/events/*.json
+data/events/*.jsonl
+
+# ML inference outputs (runtime — not committed)
+results/trinetra_output.csv
+results/TRINETRA_EVALUATOR_REPORT.csv
+results/scored_connections.csv
+results/*.json
 
 # Keep directory structure
 !data/raw/.gitkeep
@@ -22,6 +34,7 @@ data/events/*.json
 !data/windows/.gitkeep
 !data/graphs/.gitkeep
 !data/events/.gitkeep
+!results/.gitkeep
 
 # IDE
 .vscode/
